@@ -1,11 +1,11 @@
 
-define(function() {
+define(['rsvp'], function(RSVP) {
 
     function ImageLoader() {
 
-        var self = this;
-        var query = {};
-        var inProcess;
+        var self = this,
+            query = {},
+            inProcess;
 
         var finish = {
 
@@ -75,12 +75,13 @@ define(function() {
 
         };
 
-
-        this.name = function(name) {
+        var name = function(name) {
             query[name] = {};
             inProcess = name;
             return self;
         }
+
+        this.Promise = (window.Promise) ? Promise : RSVP.Promise;
 
         this.load = function(images) {
             
@@ -94,9 +95,9 @@ define(function() {
                 type = 'object';
             }
 
-            self.name(Date.now());
+            name(new Date().getTime());
 
-            query[inProcess].promise = new Promise(function(resolve, reject) {
+            query[inProcess].promise = new self.Promise(function(resolve, reject) {
                 query[inProcess].resolve = resolve;
                 query[inProcess].reject = reject;
                 load[type](images);

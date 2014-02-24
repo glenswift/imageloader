@@ -1,34 +1,45 @@
 
 require(['imageloader'], function(imageloader) {
 	
+	var div = document.getElementById('result');
+
 	imageloader
 		.load({
-			'first': 'http://www.w3schools.com/images/compatible_chrome.gif',
-			'second': 'http://www.w3schools.com/images/compatible_firefox.gif'
+			first: 'img/./chrome.gif',
+			second: 'img/./firefox.gif'
 		})
 		.ready(function(res) {
 			console.log(res);
+			for (var i in res) {
+				div.appendChild(res[i]);
+			}
 		})
 		.error(function(err) {
-			console.error(err)
+			console.error(err);
 		});
 
-	imageloader
-		.load(['http://www.w3schools.com/images/compatible_opera.gif', 'http://www.w3schools.com/images/compatible_safari.gif'])
-		.ready(function(res) {
-			console.log(res);
-		})
-		.error(function(err) {
-			console.error(err)
-		});
 
 	imageloader
-		.load('http://www.w3schools.com/images/compatible_ie.gif')
+		.load(['img/./opera.gif', 'img/./safari.gif'])
 		.ready(function(res) {
 			console.log(res);
+			for (var i = 0; i < res.length; i += 1) {
+				div.appendChild(res[i]);
+			}
 		})
 		.error(function(err) {
-			console.error(err)
+			console.error(err);
+		});
+		
+
+	imageloader
+		.load('img/./ie.gif')
+		.ready(function(res) {
+			console.log(res);
+			div.appendChild(res);
+		})
+		.error(function(err) {
+			console.error(err);
 		});
 
 })
